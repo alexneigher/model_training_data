@@ -25,12 +25,12 @@ end
 
 def folder_path(wind_speed, wind_direction)
   #figure out te right folder to put this image (some combination of wind_speed_wind_dir/filename)
-  return (WindSpeedComponent.prefix(wind_speed) + "_" + WindDirectionComponent.prefix(wind_direction) + "/")
+  return ("data/" + WindSpeedComponent.prefix(wind_speed) + "_" + WindDirectionComponent.prefix(wind_direction) + "/")
 end
 
 def maybe_create_folder(folder_name)
   #create a new folder with the correct name if it does not exist
-  Dir.mkdir(folder_name) unless Dir.exist?(folder_name)
+  FileUtils::mkdir_p(folder_name) unless Dir.exist?(folder_name)
 end
 
 

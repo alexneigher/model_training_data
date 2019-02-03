@@ -33,8 +33,6 @@ def maybe_create_folder(folder_name)
   FileUtils::mkdir_p(folder_name) unless Dir.exist?(folder_name)
 end
 
-
-
 # Loop through each station ID
 StationIds.all_ids.each do |station_id|
   puts "starting #{station_id}"
@@ -48,11 +46,8 @@ StationIds.all_ids.each do |station_id|
   else
     img_tag = nil
   end
-
-  unless img_tag
-    puts "no image skipping"
-    next
-  end
+    
+  next unless img_tag #skip if there is no image
 
   file_path = (BASE_URL + img_tag)
   file_name = file_path.split('/').last
@@ -70,6 +65,8 @@ StationIds.all_ids.each do |station_id|
   open(path + file_name, 'wb') do |file|
     file << open(file_path).read
   end
+
+  puts "saved #{file_name}"
 
   #Hash for logging
   output[file_name] = {

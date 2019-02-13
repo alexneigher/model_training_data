@@ -11,7 +11,7 @@ require './station_ids.rb'
 require './folder_names.rb'
 
 BASE_URL = "https://www.ndbc.noaa.gov"
-output = {}
+output = []
 
 def fetch_wind_direction(page)
   str = page.css('table')[4].css('table')[1].css('tr')[1].css('td')[2].text
@@ -68,12 +68,11 @@ StationIds.all_ids.each do |station_id|
 
   puts "saved #{file_name}"
 
-  #Hash for logging
-  output[file_name] = {
-    wind_speed_knots: wind_speed,
-    wind_direction_true_degrees: wind_direction
-  }
+
+  output << "#{path + file_name},\n"
 
 end
 
-puts output
+open('output.txt', 'wb') do |file|
+  file << output
+end

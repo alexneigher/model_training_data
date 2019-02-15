@@ -14,16 +14,29 @@ BASE_URL = "https://www.ndbc.noaa.gov"
 output = []
 
 def fetch_wind_direction(page)
-  str = page.css('table')[4].css('table')[1].css('tr')[1].css('td')[2].text
-  return str[/[\d.,]+/]
+  obs_table = page.css('table')[4].css('table')[1].css('tr')[1]
+  if obs_table
+
+    str = obs_table.css('td')[2].text
+    return str[/[\d.,]+/]
+  else
+    nil
+  end
 end
 
 def fetch_wind_speed(page)
-  str = page.css('table')[4].css('table')[1].css('tr')[2].css('td')[2].text
-  return str[/[\d.,]+/]
+  obs_table = page.css('table')[4].css('table')[1].css('tr')[2]
+  if obs_table
+    str = obs_table.css('td')[2].text
+    return str[/[\d.,]+/]
+  else
+    nil
+  end
 end
 
 def folder_path(wind_speed, wind_direction)
+  return nil if wind_speed.zero? && wind_direction.zero?
+
   #figure out te right folder to put this image (some combination of wind_speed_wind_dir/filename)
   return ("data/" + WindSpeedComponent.prefix(wind_speed) + "_" + WindDirectionComponent.prefix(wind_direction) + "/")
 end
@@ -59,18 +72,20 @@ StationIds.all_ids.each do |station_id|
   wind_direction = fetch_wind_direction(page).to_f.round
 
   path = folder_path(wind_speed, wind_direction)
+  
+  if path
 
-  maybe_create_folder(path)
+    maybe_create_folder(path)
 
-  open(path + file_name, 'wb') do |file|
-    file << open(file_path).read
+    open(path + file_name, 'wb') do |file|
+      file << open(file_path).read
+    end
+
+    puts "saved #{file_name}"
+
+
+    output << "#{path + file_name},\n"
   end
-
-  puts "saved #{file_name}"
-
-
-  output << "#{path + file_name},\n"
-
 end
 
 open('output.txt', 'wb') do |file|

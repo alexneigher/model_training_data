@@ -1,4 +1,4 @@
-# Run this file from inside a directory that contains the rest of the data "bins"
+# To run this file:
 # $> ruby data_pipe.rb
 
 require 'rubygems'
@@ -90,3 +90,4 @@ end
 open('output.txt', 'a') do |file|
   file << output.join(' ')
 end
+

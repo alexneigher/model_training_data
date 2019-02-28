@@ -5,7 +5,6 @@ require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'fileutils'
-require 'pry'
 
 require './station_ids.rb'
 require './folder_names.rb'
@@ -88,6 +87,6 @@ StationIds.all_ids.each do |station_id|
   end
 end
 
-open('output.txt', 'wb') do |file|
-  file << output
+open('output.txt', 'a') do |file|
+  file << output.join(' ')
 end

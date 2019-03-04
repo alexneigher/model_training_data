@@ -9,7 +9,7 @@ class WindSpeedComponent
       18..22 => "W_18t22",
       23..27 => "W_23t27",
       28..35 => "W_28t35",
-      35..50 => "W_35t50",
+      36..50 => "W_35t50",
       51..150 => "W_51t150"
     }.detect{|k,v| k === speed}.last
   end

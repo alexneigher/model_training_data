@@ -80,7 +80,7 @@ StationIds.all_ids.each do |station_id|
       file << open(file_path).read
     end
 
-    puts "saved #{file_name}"
+    puts "saved #{file_name} // Speed:#{wind_speed} Dir:#{wind_direction}"
 
 
     output << "#{path + file_name},\n"

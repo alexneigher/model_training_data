@@ -34,7 +34,9 @@ def fetch_wind_speed(page)
 end
 
 def folder_path(wind_speed, wind_direction)
-  return nil if wind_speed.zero? && wind_direction.zero?
+  return nil if wind_direction.zero?
+  return nil unless wind_speed && wind_direction
+  
 
   #figure out te right folder to put this image (some combination of wind_speed_wind_dir/filename)
   return ("data/" + WindSpeedComponent.prefix(wind_speed) + "_" + WindDirectionComponent.prefix(wind_direction) + "/")
